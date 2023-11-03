@@ -28,13 +28,13 @@ private final PIDController intakeFlyWheelPID = new  PIDController(Constants.lef
 
 private SimpleMotorFeedforward intakeFlyWheelFF = new  SimpleMotorFeedforward(Constants.leftFlywheelFF.kS, Constants.leftFlywheelFF.kV, Constants.leftFlywheelFF.kA);
 
-
+// This is where they create new ojects involving the talons, PID controller, and the motor used for the robot to be able to go forward.
 
   public Intake() {
     intakeFlyWheel.configFactoryDefault();
     intakeFlyWheel.setInverted(true); 
     intakeFlyWheel.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-
+    // This is where the Flywheel will be reversed as a way of controlling the robot and keep it within the dtsance and speed set.
    
     intakeFlyWheelPID.setTolerance(flywheelTolerance);
 
@@ -44,10 +44,10 @@ private SimpleMotorFeedforward intakeFlyWheelFF = new  SimpleMotorFeedforward(Co
   }
   public void setFlywheelPower(double speed) {
     intakeFlyWheel.set(speed);
-    }
+    } // This is the FlyWheels intake speed as in the parentheses it shows the speed as a double.
     public boolean flywheelWithinErrorMargin() {
     return (intakeFlyWheelPID.atSetpoint());
-    }
+    } // This is to calculate/identify the errors made within the FlyWhell with the margin when it is placed at the setpoint.
     public void setFlywheelConstantVelocity(double RPM) {
     intakeFlyWheel.setVoltage((intakeFlyWheelFF.calculate(RPM/60.0)) + intakeFlyWheelPID.calculate(getLeftRPM(), RPM));
     }
@@ -73,11 +73,11 @@ private SimpleMotorFeedforward intakeFlyWheelFF = new  SimpleMotorFeedforward(Co
         return (intakeFlyWheel.getStatorCurrent()/2.0);
         
         }
-       
+       // This is the constructor where it is using the "getting" method to obtain the information on the flywheel and also where the formula is to calculate the sensor velocity of the Ball Intake robot.
         public void resetFlywheelEncoders() {
         intakeFlyWheel.setSelectedSensorPosition(0, 0, 10);
         }
-        
+        // Shows the general setting position for the sensor is going to start at 0 and 10 for the flywheel intake.
 
   @Override
   public void periodic() {
@@ -89,7 +89,7 @@ SmartDashboard.putNumber("Left Flywheel Power", getLeftFlywheelPower());
 SmartDashboard.putNumber("Right Flywheel RPM", getRightRPM());
 SmartDashboard.putNumber("Right Flywheel Power", getRightFlywheelPower());
 SmartDashboard.putNumber("Intake Flywheel Current", getCurrent());
-
+// This is using the getting method as it says putNumber which will print out the values that are currently running such as the roller will print everything,allowing it to provide accurate data and record what is necessary.
 if (RobotContainer.getJoy1().getRawButton(2) && overrideTimer.get() >=  overrideTime) {
   override = !override;
   overrideTimer.reset();
@@ -101,10 +101,11 @@ if (RobotContainer.getJoy1().getRawButton(2) && overrideTimer.get() >=  override
     setFlywheelConstantVelocity(0.0);
     setFlywheelPower(0.0);
     }
+    // This is where the robot will stop moving and functioning as the speed goes to 0 which indicates that the Robot Intake will end.
     } else if (!override) { // Default manual override
     setFlywheelPower(-1.0*RobotContainer.getJoy1().getY());
     }
-      
+    // This is using the getting method for the different variables of the Robot container.
   }
 }
 
